@@ -33,13 +33,18 @@ builder.Services.AddScoped<TaskService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache();
 
 var app = builder.Build();
 
 app.UseSession();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+});
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
