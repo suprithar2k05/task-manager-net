@@ -51,3 +51,4 @@
 /Users/echo/Documents/projects/task-managernet/server/obj/Debug/net8.0/server.pdb
 /Users/echo/Documents/projects/task-managernet/server/obj/Debug/net8.0/server.genruntimeconfig.cache
 /Users/echo/Documents/projects/task-managernet/server/obj/Debug/net8.0/ref/server.dll
+/Users/echo/Documents/projects/task-managernet/server/obj/Debug/net8.0/server.sourcelink.json

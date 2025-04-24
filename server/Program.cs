@@ -7,20 +7,14 @@ using server.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Define allowed origin
-var allowedOrigin = "http://localhost:5173";
-
-// Add services
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend", policy =>
-    {
-        policy.WithOrigins(allowedOrigin)
+    options.AddPolicy("AllowAll", policy =>
+        policy.AllowAnyOrigin()
               .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials(); // if using cookies/session auth
-    });
+              .AllowAnyMethod());
 });
+
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
 builder.Services.AddSingleton<MongoContext>();
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
@@ -45,8 +39,7 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-app.UseCors("AllowFrontend");
-
+app.UseCors("AllowAll");
 app.UseAuthentication(); // if using auth
 app.UseAuthorization();
 app.Run();
