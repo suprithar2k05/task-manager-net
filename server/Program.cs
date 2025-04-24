@@ -7,13 +7,19 @@ using server.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Define allowed origin
+// var allowedOrigin = "http://localhost:5173";
+
+// Add services
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
-        policy.AllowAnyOrigin()
+    options.AddPolicy("AllowFrontend", policy =>
+        policy.WithOrigins("https://taskmanager-front-alpha.vercel.app")
               .AllowAnyHeader()
-              .AllowAnyMethod());
+              .AllowAnyMethod()
+              .AllowCredentials());
 });
+
 
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
 builder.Services.AddSingleton<MongoContext>();
@@ -39,7 +45,8 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-app.UseCors("AllowAll");
+app.UseCors("AllowFrontend");
+
 app.UseAuthentication(); // if using auth
 app.UseAuthorization();
 app.Run();
