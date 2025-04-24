@@ -1,12 +1,15 @@
 import { useState } from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import API from '../services/api'
 import { toast } from 'react-toastify'
 import { validateUsers } from '../utils/validate';
+import { useUser } from '../context/UserContext';
 
-const Login = ({user}) => {
+const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
+  const { user, setUser } = useUser();
+  const navigate = useNavigate();
 
   if (user) {
     return <Navigate to="/" replace />;
@@ -21,8 +24,14 @@ const Login = ({user}) => {
     setErrors({...formErrors});
     if(hasError) return;
     try {
-      const res = await API.post('/auth/login', form)
-      window.location.href = '/';
+      const res = await API.post('/auth/login', form);
+      if (res.data?.data?.userId) {
+        console.log(res.data);
+        toast.success("Login successful!");
+        setUser(res.data?.data?.userId);
+      } else {
+        toast.error("Login failed!");
+      }
     } catch (err) {
       console.error(err)
       toast.error(err.response?.data?.message || 'Login failed')

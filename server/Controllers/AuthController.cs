@@ -27,7 +27,7 @@ public class AuthController : ControllerBase
         {
             var user = await _authService.RegisterAsync(dto);
             HttpContext.Session.SetString("UserId", user.Id);
-            return Ok(new { message = "User registered successfully." });
+            return Ok(new ApiResponse("registration successful", new { userId = user.Id }));
         }
         catch (Exception ex)
         {

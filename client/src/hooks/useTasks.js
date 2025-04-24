@@ -41,7 +41,6 @@ const useTasks = () => {
 
   const createTask = async task => {
     try {
-      console.log('tasks new >>>', task);
       const res = await API.post('/task', task);
       setTasks(prev => [res.data?.data, ...prev])
       toast.success('Task created!')
@@ -54,7 +53,6 @@ const useTasks = () => {
   const updateTask = async (id, updatedData) => {
     try {
       const res = await API.put(`/task/${id}`, updatedData);
-
       setTasks(prev =>
         prev.map(t => (t.id === id ? res.data?.data : t))
       )
@@ -66,7 +64,6 @@ const useTasks = () => {
 
   const deleteTask = async id => {
     try {
-      window.location.href = '/';
       await API.delete(`/task/${id}`)
       setTasks(prev => prev.filter(t => t.id !== id))
       toast.success('Task deleted!')
@@ -78,7 +75,6 @@ const useTasks = () => {
   const toggleComplete = async id => {
     const task = tasks.find(t => t.id === id)
     if (!task) return
-    window.location.href = '/';
     updateTask(id, { ...task, isCompleted: !task.isCompleted })
   }
 

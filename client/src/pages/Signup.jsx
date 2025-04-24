@@ -3,15 +3,15 @@ import { useNavigate, Navigate } from 'react-router-dom'
 import API from '../services/api'
 import { toast } from 'react-toastify'
 import { validateUsers } from '../utils/validate'
+import { useUser } from '../context/UserContext'
 
-const Signup = ({ user }) => {
+const Signup = () => {
   const [form, setForm] = useState({ username: '', email: '', password: '' });
   const [errors, setErrors] = useState({});
-  
+  const {user, setUser} = useUser();
   if (user) {
     return <Navigate to="/" replace />;
   }
-  const navigate = useNavigate()
 
   const handleChange = e =>
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -22,10 +22,13 @@ const Signup = ({ user }) => {
     setErrors(formErrors);
     if(hasError) return;
     try {
-      await API.post('/auth/signup', form)
-      toast.success('Signup successful!')
-      navigate('/');
-      window.location.href = '/';
+      const res = await API.post('/auth/signup', form)
+      if (res.data?.data?.userId) {
+        toast.success('Signup successful!')
+        setUser(res.data?.data?.userId);
+      } else {
+        toast.error("Login failed!");
+      }
     } catch (err) {
       console.error(err)
       toast.error(err.response?.data?.message || 'Signup failed')

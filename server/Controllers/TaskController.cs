@@ -35,16 +35,16 @@ public class TaskController : ControllerBase
     public async Task<IActionResult> Create(TaskDto dto)
     {
         if (UserId == null) return Unauthorized("User not logged in");
-        await _service.Create(UserId, dto);
-        return Ok(new ApiResponse("Task created", dto));
+        var user = await _service.Create(UserId, dto);
+        return Ok(new ApiResponse("Task created", user));
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(string id, TaskDto dto)
     {
         if (UserId == null) return Unauthorized();
-        await _service.Update(id, dto);
-        return Ok(new ApiResponse("Task updated", dto));
+        var user = await _service.Update(id, dto);
+        return Ok(new ApiResponse("Task updated", user));
     }
 
     [HttpDelete("{id}")]

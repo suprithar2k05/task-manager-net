@@ -37,8 +37,7 @@ const TaskForm = ({ initialData = {}, onSubmit, onCancel }) => {
     const [hasError, formErrors] = validateTask(form);
     setErrors(formErrors);
     if(hasError) return;
-    onSubmit(form)
-    window.location.href = '/';
+    onSubmit(form);
   }
 
   return (

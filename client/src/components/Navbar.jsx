@@ -3,10 +3,11 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import API from '../services/api';
 import { toast } from 'react-toastify';
+import { useUser } from '../context/UserContext';
 
-const Navbar = ({user, setUser}) => {
+const Navbar = () => {
+  const { user, setUser } = useUser();
   const navigate = useNavigate();
-
   const handleLogout = async () => {
     await API.post('/auth/logout');
     navigate('/login');

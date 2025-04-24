@@ -16,18 +16,24 @@ public class TaskService
     public Task<TaskItem> GetById(string id) => _repo.GetByIdAsync(id);
     
     
-    public Task Create(string userId, TaskDto dto) => _repo.CreateAsync(new TaskItem
+    public async Task<TaskItem> Create(string userId, TaskDto dto)
     {
-        Title = dto.Title,
-        Priority = dto.Priority,
-        Tags = dto.Tags,
-        Description = dto.Description,
-        DueDate = dto.DueDate,
-        IsCompleted = dto.IsCompleted,
-        UserId = userId,
-    });
+        var task = new TaskItem
+        {
+            Title = dto.Title,
+            Priority = dto.Priority,
+            Tags = dto.Tags,
+            Description = dto.Description,
+            DueDate = dto.DueDate,
+            IsCompleted = dto.IsCompleted,
+            UserId = userId,
+        };
 
-    public async Task Update(string id, TaskDto dto)
+        await _repo.CreateAsync(task);
+        return task;
+    }
+
+    public async Task<TaskItem> Update(string id, TaskDto dto)
     {
         var task = await _repo.GetByIdAsync(id);
         if (task != null)
@@ -40,6 +46,7 @@ public class TaskService
             task.IsCompleted = dto.IsCompleted;
             await _repo.UpdateAsync(task);
         }
+        return task;
     }
 
     public Task Delete(string id) => _repo.DeleteAsync(id);

@@ -95,7 +95,9 @@ const Dashboard = () => {
 
               <div className="flex gap-2 mt-4 md:mt-0">
                 <button
-                  onClick={() => toggleComplete(task.id)}
+                  onClick={() => {
+                    toggleComplete(task.id)
+                  }}
                   className="bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500"
                 >
                   Toggle
