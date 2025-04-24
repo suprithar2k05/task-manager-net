@@ -1,6 +1,6 @@
 # 📝 Task Manager App (Monorepo)
 
-A full-stack Task Manager Application built with **React** (frontend) and **Node.js/Express** (backend), featuring secure user authentication, task CRUD operations, filtering, tagging, due dates, and priority management. This monorepo contains both the frontend and backend codebases.
+A full-stack Task Manager Application built with **React** (frontend) and **.NETcore** (backend), featuring secure user authentication, task CRUD operations, filtering, tagging, due dates, and priority management. This monorepo contains both the frontend and backend codebases.
 
 ## Features
 
@@ -23,13 +23,7 @@ A full-stack Task Manager Application built with **React** (frontend) and **Node
 * Prettier + ESLint
 
 ### Backend
-* Node.js
-* Express.js
-* MongoDB + Mongoose
-* jsonwebtoken
-* bcryptjs
-* express-validator
-* dotenv
+* .NET CORE
 
 ## Getting Started
 
@@ -64,7 +58,8 @@ JWT_SECRET=your_jwt_secret
 ### 4. Start Development Server
 #### backend server
 ```bash
-npm run start
+dotnet build
+dotnet run
 ```
 #### frontend server
 ```bash
@@ -89,8 +84,6 @@ npm run preview
 
 ### Unified Validation (Frontend + Backend)
 **Challenge:** Ensuring consistent validation for tasks and user forms.
-
-**Solution:** express-validator on the server and basic form validation on the client.
 
 ### Responsive UI
 **Challenge:** Making it mobile-first and fully responsive.
