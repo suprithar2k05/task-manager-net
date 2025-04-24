@@ -34,10 +34,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDistributedMemoryCache();
-
-var app = builder.Build();
-
-app.UseSession();
 builder.Services.AddSession(options =>
 {
     options.Cookie.HttpOnly = true;
@@ -45,6 +41,10 @@ builder.Services.AddSession(options =>
     options.Cookie.SameSite = SameSiteMode.None;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
+
+var app = builder.Build();
+
+app.UseSession();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
